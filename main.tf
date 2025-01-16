@@ -1,5 +1,5 @@
 module "Tokyo" {
-    source = "./Tokyo"
+  source = "./Tokyo"
 }
 
 module "Virginia" {
