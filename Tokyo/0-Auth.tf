@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "ap-northeast-1"
 }
 
 terraform {
@@ -9,11 +9,12 @@ terraform {
       version = "~> 3.0"
     }
   }
-  cloud {
-    organization = "ECSOrg"
+  cloud { 
+    
+    organization = "ECSOrg" 
 
-    workspaces {
-      name = "ECS-Workflow003"
-    }
+    workspaces { 
+      name = "Test-Armageddon-Workspace" 
+    } 
   }
 }

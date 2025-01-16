@@ -1,20 +1,20 @@
-resource "aws_autoscaling_group" "app1_asg" {
-  name_prefix      = "app1-auto-scaling-group-"
-  min_size         = 1
-  max_size         = 4
-  desired_capacity = 3
-  vpc_zone_identifier = [
+resource "aws_autoscaling_group" "nvirginia_asg" {
+  name_prefix           = "nvirginia-auto-scaling-group-"
+  min_size              = 2
+  max_size              = 4
+  desired_capacity      = 3
+  vpc_zone_identifier   = [
     aws_subnet.private-us-east-1a.id,
     aws_subnet.private-us-east-1b.id,
     aws_subnet.private-us-east-1c.id
   ]
-  health_check_type         = "ELB"
-  health_check_grace_period = 300
-  force_delete              = true
-  target_group_arns         = [aws_lb_target_group.app1_tg.arn]
+  health_check_type          = "ELB"
+  health_check_grace_period  = 300
+  force_delete               = true
+  target_group_arns          = [aws_lb_target_group.nvirginia_tg.arn]
 
   launch_template {
-    id      = aws_launch_template.app1_LT.id
+    id      = aws_launch_template.nvirginia_LT.id
     version = "$Latest"
   }
 
@@ -31,15 +31,15 @@ resource "aws_autoscaling_group" "app1_asg" {
 
   # Instance protection for terminating
   initial_lifecycle_hook {
-    name                 = "scale-in-protection"
-    lifecycle_transition = "autoscaling:EC2_INSTANCE_TERMINATING"
-    default_result       = "CONTINUE"
-    heartbeat_timeout    = 300
+    name                  = "scale-in-protection"
+    lifecycle_transition  = "autoscaling:EC2_INSTANCE_TERMINATING"
+    default_result        = "CONTINUE"
+    heartbeat_timeout     = 300
   }
 
   tag {
     key                 = "Name"
-    value               = "app1-instance"
+    value               = "nvirginia-instance"
     propagate_at_launch = true
   }
 
@@ -52,11 +52,11 @@ resource "aws_autoscaling_group" "app1_asg" {
 
 
 # Auto Scaling Policy
-resource "aws_autoscaling_policy" "app1_scaling_policy" {
-  name                   = "app1-cpu-target"
-  autoscaling_group_name = aws_autoscaling_group.app1_asg.name
+resource "aws_autoscaling_policy" "nvirginia_scaling_policy" {
+  name                   = "nvirginia-cpu-target"
+  autoscaling_group_name = aws_autoscaling_group.nvirginia_asg.name
 
-  policy_type               = "TargetTrackingScaling"
+  policy_type = "TargetTrackingScaling"
   estimated_instance_warmup = 120
 
   target_tracking_configuration {
@@ -68,25 +68,25 @@ resource "aws_autoscaling_policy" "app1_scaling_policy" {
 }
 
 # Enabling instance scale-in protection
-resource "aws_autoscaling_attachment" "app1_asg_attachment" {
-  autoscaling_group_name = aws_autoscaling_group.app1_asg.name
-  alb_target_group_arn   = aws_lb_target_group.app1_tg.arn
+resource "aws_autoscaling_attachment" "nvirginia_asg_attachment" {
+  autoscaling_group_name = aws_autoscaling_group.nvirginia_asg.name
+  alb_target_group_arn   = aws_lb_target_group.nvirginia_tg.arn
 }
 
-resource "aws_autoscaling_group" "app2_asg" {
-  name_prefix      = "app1-auto-scaling-group-"
-  min_size         = 1
-  max_size         = 4
-  desired_capacity = 3
-  vpc_zone_identifier = [
+/*resource "aws_autoscaling_group" "app2_asg" {
+  name_prefix           = "nvirginia-auto-scaling-group-"
+  min_size              = 1
+  max_size              = 4
+  desired_capacity      = 3
+  vpc_zone_identifier   = [
     aws_subnet.private-us-east-1a.id,
     aws_subnet.private-us-east-1b.id,
-    aws_subnet.private-us-east-1c.id
+    aws_subnet.private-us-east-1b.id
   ]
-  health_check_type         = "ELB"
-  health_check_grace_period = 300
-  force_delete              = true
-  target_group_arns         = [aws_lb_target_group.app2_tg_443.arn]
+  health_check_type          = "ELB"
+  health_check_grace_period  = 300
+  force_delete               = true
+  target_group_arns          = [aws_lb_target_group.app2_tg_443.arn]
 
   launch_template {
     id      = aws_launch_template.app2_LT_443.id
@@ -106,10 +106,10 @@ resource "aws_autoscaling_group" "app2_asg" {
 
   # Instance protection for terminating
   initial_lifecycle_hook {
-    name                 = "scale-in-protection"
-    lifecycle_transition = "autoscaling:EC2_INSTANCE_TERMINATING"
-    default_result       = "CONTINUE"
-    heartbeat_timeout    = 300
+    name                  = "scale-in-protection"
+    lifecycle_transition  = "autoscaling:EC2_INSTANCE_TERMINATING"
+    default_result        = "CONTINUE"
+    heartbeat_timeout     = 300
   }
 
   tag {
@@ -131,7 +131,7 @@ resource "aws_autoscaling_policy" "app2_scaling_policy" {
   name                   = "app2-cpu-target"
   autoscaling_group_name = aws_autoscaling_group.app2_asg.name
 
-  policy_type               = "TargetTrackingScaling"
+  policy_type = "TargetTrackingScaling"
   estimated_instance_warmup = 120
 
   target_tracking_configuration {
@@ -146,4 +146,4 @@ resource "aws_autoscaling_policy" "app2_scaling_policy" {
 resource "aws_autoscaling_attachment" "app2_asg_attachment" {
   autoscaling_group_name = aws_autoscaling_group.app2_asg.name
   alb_target_group_arn   = aws_lb_target_group.app2_tg_443.arn
-}
+}*/

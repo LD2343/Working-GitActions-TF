@@ -1,17 +1,17 @@
-resource "aws_security_group" "app1-sg01-servers" {
-  name        = "app1-sg01-servers"
-  description = "app1-sg01-servers"
-  vpc_id      = aws_vpc.app1.id
+resource "aws_security_group" "TG01-SG01-tokyo" {
+  name        = "TG01-SG01-tokyo"
+  description = "TG01-SG01-tokyo"
+  vpc_id      = aws_vpc.tokyovpc.id
 
   ingress {
-    description = "MyHomePage"
+    description = "TG01-SG01-tokyo"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  /*ingress {
+  ingress {
     description = "SSH"
     from_port   = 22
     to_port     = 22
@@ -20,6 +20,14 @@ resource "aws_security_group" "app1-sg01-servers" {
   }
 
   ingress {
+    description = "icmp"
+    from_port   = 8
+    to_port     = 0
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  /*ingress {
     description = "MyEvilBox"
     from_port   = 3389
     to_port     = 3389
@@ -36,10 +44,7 @@ resource "aws_security_group" "app1-sg01-servers" {
   }
 
   tags = {
-    Name    = "app1-sg01-servers"
-    Service = "application1"
-    Owner   = "Luke"
-    Planet  = "Musafar"
+    Name    = "TG01-SG01-tokyo"
   }
 
 }
@@ -48,26 +53,26 @@ resource "aws_security_group" "app1-sg01-servers" {
 
 
 
-resource "aws_security_group" "app1-sg02-LB01" {
-  name        = "app1-sg02-LB01"
-  description = "app1-sg02-LB01"
-  vpc_id      = aws_vpc.app1.id
+resource "aws_security_group" "LB01-SG01-tokyo" {
+  name        = "LB01-SG01-tokyo"
+  description = "LB01-SG01-tokyo"
+  vpc_id      = aws_vpc.tokyovpc.id
 
   ingress {
-    description = "MyHomePage"
+    description = "TG01-SG01-tokyo"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
+  /*ingress {
     description = "Secure"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-  }
+  }*/
 
   egress {
     from_port   = 0
@@ -77,23 +82,36 @@ resource "aws_security_group" "app1-sg02-LB01" {
   }
 
   tags = {
-    Name    = "app1-sg02-LB01"
-    Service = "application1"
-    Owner   = "Luke"
-    Planet  = "Musafar"
+    Name    = "LB01-SG01-tokyo"
   }
 
 }
 
-resource "aws_security_group" "app1-sg03-secure-servers" {
-  name        = "app1-sg03-secure-servers"
-  description = "app1-sg03-secure-servers"
-  vpc_id      = aws_vpc.app1.id
+resource "aws_security_group" "Syslog-SG01-tokyo" {
+  name        = "Syslog-SG01-tokyo"
+  description = "Syslog-SG01-tokyo"
+  vpc_id      = aws_vpc.tokyovpc.id
 
-  ingress {
-    description = "MyHomePage"
+  /*ingress {
+    description = "HTTP"
     from_port   = 80
     to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }*/
+
+  ingress {
+    description = "Syslog"
+    from_port   = 514
+    to_port     = 514
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -108,10 +126,7 @@ resource "aws_security_group" "app1-sg03-secure-servers" {
   }
 
   tags = {
-    Name    = "app1-sg03-secure-servers"
-    Service = "application1"
-    Owner   = "Luke"
-    Planet  = "Musafar"
+    Name    = "Syslog-SG01-tokyo"
   }
 
 }
