@@ -1,11 +1,11 @@
-resource "aws_launch_template" "app1_LT" {
-  name_prefix   = "app1_LT"
-  image_id      = "ami-012967cc5a8c9f891"
+resource "aws_launch_template" "nvirginia_LT" {
+  name_prefix   = "nvirginia_LT"
+  image_id      = "ami-0453ec754f44f9a4a"  
   instance_type = "t2.micro"
 
-  key_name = "MyLinuxBox"
+  key_name = "NVirginiaLinux"
 
-  vpc_security_group_ids = [aws_security_group.app1-sg01-servers.id]
+  vpc_security_group_ids = [aws_security_group.TG01-SG01-nvirginia.id]
 
   user_data = base64encode(<<-EOF
     #!/bin/bash
@@ -38,7 +38,7 @@ resource "aws_launch_template" "app1_LT" {
     <body>
     <div>
     <h1>Class 6 unsecure</h1>
-    <h1>TFE w/ Github Actions</h1>
+    <h1>East Coast Saiyans - Live from Thailand</h1>
     <p><b>Instance Name:</b> $(hostname -f) </p>
     <p><b>Instance Private Ip Address: </b> $local_ipv4</p>
     <p><b>Availability Zone: </b> $az</p>
@@ -57,10 +57,7 @@ resource "aws_launch_template" "app1_LT" {
   tag_specifications {
     resource_type = "instance"
     tags = {
-      Name    = "app1_LT"
-      Service = "application1"
-      Owner   = "Chewbacca"
-      Planet  = "Mustafar"
+      Name    = "nvirginia_LT"
     }
   }
 
@@ -70,9 +67,9 @@ resource "aws_launch_template" "app1_LT" {
 }
 
 
-resource "aws_launch_template" "app2_LT_443" {
+/*resource "aws_launch_template" "app2_LT_443" {
   name_prefix   = "app2_LT_443"
-  image_id      = "ami-012967cc5a8c9f891"
+  image_id      = "ami-012967cc5a8c9f891"  
   instance_type = "t2.micro"
 
   key_name = "MyLinuxBox"
@@ -110,7 +107,7 @@ resource "aws_launch_template" "app2_LT_443" {
     <body>
     <div>
     <h1>Class 6 Secure</h1>
-    <h1>TFE w/ Github Actions</h1>
+    <h1>East Coast Saiyans - Live from Thailand</h1>
     <p><b>Instance Name:</b> $(hostname -f) </p>
     <p><b>Instance Private Ip Address: </b> $local_ipv4</p>
     <p><b>Availability Zone: </b> $az</p>
@@ -130,13 +127,10 @@ resource "aws_launch_template" "app2_LT_443" {
     resource_type = "instance"
     tags = {
       Name    = "app2_LT_443"
-      Service = "application1"
-      Owner   = "Chewbacca"
-      Planet  = "Mustafar"
     }
   }
 
   lifecycle {
     create_before_destroy = true
   }
-}
+}*/

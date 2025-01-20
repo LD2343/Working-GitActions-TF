@@ -9,11 +9,11 @@ terraform {
       version = "~> 3.0"
     }
   }
-  cloud {
+    cloud {
     organization = "ECSOrg"
 
     workspaces {
-      name = "ECS-Workflow003"
+      name = "Test-Armageddon-Workspace"
     }
   }
 }

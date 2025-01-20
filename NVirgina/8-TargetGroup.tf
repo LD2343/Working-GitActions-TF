@@ -1,8 +1,8 @@
-resource "aws_lb_target_group" "app1_tg" {
-  name        = "app1-target-group"
-  port        = 80
-  protocol    = "HTTP"
-  vpc_id      = aws_vpc.app1.id
+resource "aws_lb_target_group" "nvirginia_tg" {
+  name     = "nvirginia-target-group"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.nvirginiavpc.id
   target_type = "instance"
 
   health_check {
@@ -17,19 +17,16 @@ resource "aws_lb_target_group" "app1_tg" {
   }
 
   tags = {
-    Name    = "App1TargetGroup"
-    Service = "App1"
-    Owner   = "User"
-    Project = "Web Service"
+    Name    = "nvirginiaTargetGroup"
   }
 }
 
 
-resource "aws_lb_target_group" "app2_tg_443" {
-  name        = "app2-tg-443"
-  port        = 80
-  protocol    = "HTTP"
-  vpc_id      = aws_vpc.app1.id
+/*resource "aws_lb_target_group" "app2_tg_443" {
+  name     = "app2-tg-443"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.app1.id
   target_type = "instance"
 
   health_check {
@@ -49,4 +46,4 @@ resource "aws_lb_target_group" "app2_tg_443" {
     Owner   = "User"
     Project = "Web Service"
   }
-}
+}*/
